@@ -10,16 +10,21 @@ import abs.api.Configuration;
 import abs.api.Context;
 import abs.api.DispatchInbox;
 import abs.api.LocalContext;
+//import ABS.Absyn.AnyIdent;
 //import ABS.gen.java.ABS.*;
 //import ABS.gen.java.lib.JLex.*;
 //import java.util.List;
 import java.util.concurrent.Executors;
 import ABS.Absyn.*;
+import abs.api.Reference;
+import java.net.URI;
+//import abs.api.Actor;
+//import ABS.Absyn.AnyIdent.Visitor;
 //import java.util.concurrent.CompletableFuture;
 //import java.util.concurrent.RunnableFuture;
 //import java.util.concurrent.Callable;
 //import javax.management.openmbean.SimpleType;
-import java.util.function.*;
+//import java.util.function.*;
 
 /**
  *
@@ -34,9 +39,10 @@ public class Traverse implements Actor
 			.build();
 	private final Context context = new LocalContext(config);
         
+     
+   
         //Traversing in each of the modules from the ABS module
-     public class AnyIdentVisitor<R,A> implements AnyIdent.Visitor<R,A>
-  {
+     public class AnyIdentVisitor<R,A> implements AnyIdent.Visitor<R,A>   {
       
 // after implements the AnyIdent.visitor<R,A) are the functional interfaces 
          //for the class AnyIdentVisitor<R,A>
@@ -54,40 +60,79 @@ public class Traverse implements Actor
           * @return
           */
         
+         
+    AnyIdent anyident = new AnyIdent() {
+
+        @Override
+        public <R, A> R accept(AnyIdent.Visitor<R, A> v, A arg) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    };
+    
+    Actor actor = new Actor() {
+
+        @Override
+        public URI name() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public int compareTo(Reference t) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    };
+   
     @Override
     public R visit(ABS.Absyn.AnyIden p, A arg)
-    {
-      /* Code For AnyIden Goes Here */
-         //using lambdas expression 
-      
+    {              
+    
     AnyIden refer = new AnyIden();
     refer.equals(p);
     refer.hashCode();
     refer.accept(this, arg);
+    
+    //refer.send((p,arg)-> {  
     return this.visit(p, arg);
     
-    //String x ;
-    //x = (R,A)-> {return this.visit((R,A) -> { return x;});
+    //Runnable r = (p,arg)-> {return this.visit(p, arg);};
+    //r.send(Runnable);
+    //Thread t = new Thread(r);
+    //t.start();
+    
+    //String x;
+    //x = (R,A)-> {return this.visit((R,A) }-> { return x;});
+    //return this.visit(p, arg);
+    //refer.visit(ABS.Absyn.AnyIden p, A arg);
+    
+    //Runnable idex;
+    //idex = (AnyIden,arg)-> {return this.visit((AnyIden,arg) -> { return idex;});
     //commented out as I need to reimplement all the methods within the interfaces using lambda expressios
     // by declaring it as default methods or creating separate interfaces for each method for the existing method
-//String AnyIdent ;
-    //AnyIdent = (p,A) -> { return this.visit((p,A) -> {return x;});   
+    //String AnyIdent ;
+    //AnyIdent = (p,A) -> { return this.visit((p,A) -> {return AnyIdent;});   
     //}
         
        //to write in lambda expression
        //(ABS.Absyn.AnyIden p, A arg) -> {p.lident_.visit();}
         //return null;
     }
-         
+            
+            
+       
+
+//String x;
+    //x = (R,A)-> {return this.visit((R,A) -> { return x;});    }
     
-    @Override
+   @Override
     public R visit(ABS.Absyn.AnyTyIden p, A arg)
     {
         AnyTyIden coresp = new AnyTyIden();
         coresp.equals(p);
     coresp.hashCode();
     coresp.accept(this, arg);
+    //coresp.send((p,arg)-> { return this.ask(NS, args);})
     return this.visit(p, arg);
+   
      //String AnyTyIden ;
     //AnyTyIden = (p,A)-> {return this.visit((p,A) -> { return AnyTyIden;});
       /* Code For AnyTyIden Goes Here */
@@ -123,6 +168,8 @@ public R visit(ABS.Absyn.Prog p, A arg)
         resp.hashCode();
         resp.accept(this, arg);
         return this.visit(p, arg);
+          //resp.send((p,arg)-> { return this.ask(NS, args);
+
     }
 }
         //p1 -> {return listmodule_;}                
@@ -153,6 +200,8 @@ public R visit(ABS.Absyn.Modul p, A arg)
         mesp.hashCode();
         mesp.accept(this, arg);
         return this.visit(p, arg);
+            //mesp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 }
 //////	  R x = p.type_.visit();
@@ -207,6 +256,8 @@ public class ExportVisitor<R,A> implements Export.Visitor<R,A>
         pesp.hashCode();
         pesp.accept(this, arg);
         return this.visit(p, arg);
+            //pesp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////      /* Code For AnyExport(AnyIdent) Goes Here */
 //////	List<JavaAnyIdent> es = empty;
@@ -227,6 +278,8 @@ public class ExportVisitor<R,A> implements Export.Visitor<R,A>
         fesp.hashCode();
         fesp.accept(this, arg);
         return this.visit(p, arg);
+            //fesp.send((p,arg)-> { return this.ask(NS, args);
+
  }
 //////      /* Code For AnyFromExport Goes Here */
 //////	List<JavaAnyIdent> es = empty;
@@ -258,6 +311,8 @@ public class ExportVisitor<R,A> implements Export.Visitor<R,A>
         rexp.hashCode();
         rexp.accept(this, arg);
         return this.visit(p, arg);
+            //rexp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////      /* Code For StarExport Goes Here */
 //////        
@@ -271,6 +326,8 @@ public class ExportVisitor<R,A> implements Export.Visitor<R,A>
         pesp.hashCode();
         pesp.accept(this, arg);
         return this.visit(p, arg);
+            //pesp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 }
 //////    {
@@ -300,6 +357,8 @@ public class ImportVisitor<R,A> implements Import.Visitor<R,A>
         iesp.hashCode();
         iesp.accept(this, arg);
         return this.visit(p, arg);
+            //iesp.send((p,arg)-> { return this.ask(NS, args);
+
     }
 //////    {
 //////      /* Code For AnyImport(ImportType) Goes Here */
@@ -341,6 +400,8 @@ public class ImportVisitor<R,A> implements Import.Visitor<R,A>
         fimo.hashCode();
         fimo.accept(this, arg);
         return this.visit(p, arg);
+            //fimo.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For AnyFromImport Goes Here */
@@ -377,6 +438,8 @@ public class ImportVisitor<R,A> implements Import.Visitor<R,A>
         sfim.hashCode();
         //sfim.accept(this, arg);
         return this.visit(p, arg);
+            //sfim.send((p,arg)-> { return this.ask(NS, args);
+
 }
 }
 //////      /* Code For StarFromImport Goes Here */
@@ -401,6 +464,8 @@ public class ImportTypeVisitor<R,A> implements ImportType.Visitor<R,A>
         fimp.hashCode();
         fimp.accept(this, arg);
         return this.visit(p, arg);
+            //fimp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 
         @Override
@@ -518,6 +583,8 @@ public R  visit(ABS.Absyn.TypeDecl p, A arg)
         dimp.hashCode();
         dimp.accept(this, arg);
         return this.visit(p, arg);
+            //dimp.send((p,arg)-> { return this.ask(NS, args);
+
  }
 //////      /* Code For TypeDecl Goes Here */
 //////
@@ -544,6 +611,8 @@ public R visit(ABS.Absyn.DataDecl p, A arg)
         dadc.hashCode();
         dadc.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 /////      /* Code For DataDecl Goes Here */
@@ -594,6 +663,8 @@ public R visit(ABS.Absyn.FunDecl p, A arg)
         fdcl.hashCode();
         fdcl.accept(this, arg);
         return this.visit(p, arg);
+            //fdcl.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For FunDecl Goes Here */
@@ -616,6 +687,8 @@ public R visit(ABS.Absyn.FunParDecl p, A arg)
         fpdimp.hashCode();
         fpdimp.accept(this, arg);
         return this.visit(p, arg);
+            //fpdimp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For FunParDecl Goes Here */
@@ -638,6 +711,8 @@ public R visit(ABS.Absyn.InterfDecl p, A arg)
         itdc.hashCode();
         itdc.accept(this, arg);
         return this.visit(p, arg);
+            //itdc.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For InterfDecl Goes Here */
@@ -656,6 +731,8 @@ public R visit(ABS.Absyn.ExtendsDecl p, A arg)
         eimp.hashCode();
         eimp.accept(this, arg);
         return this.visit(p, arg);
+            //eimp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For ExtendsDecl Goes Here */
@@ -676,6 +753,8 @@ public R visit(ABS.Absyn.ClassDecl p, A arg)
         cimp.hashCode();
         cimp.accept(this, arg);
         return this.visit(p, arg);
+            //cimp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For ClassDecl Goes Here */
@@ -697,6 +776,8 @@ public R visit(ABS.Absyn.ClassParamDecl p, A arg)
         cpdimp.hashCode();
         cpdimp.accept(this, arg);
         return this.visit(p, arg);
+            //cpdimp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For ClassParamDecl Goes Here */
@@ -720,6 +801,8 @@ public R visit(ABS.Absyn.ClassImplements p, A arg)
         cmp.hashCode();
         cmp.accept(this, arg);
         return this.visit(p, arg);
+            //cmp.send((p,arg)-> { return this.ask(NS, args);
+
         //return this.visit(p, arg)
 }
 //////    {
@@ -744,6 +827,8 @@ public R visit(ABS.Absyn.ClassParamImplements p, A arg)
         cpims.hashCode();
         cpims.accept(this, arg);
         return this.visit(p, arg);
+            //cpims.send((p,arg)-> { return this.ask(NS, args);
+
         //return this.visit(p, arg)
 }
 
@@ -796,6 +881,8 @@ public R visit(ABS.Absyn.SinglConstrIdent p, A arg)
         scmp.hashCode();
         scmp.accept(this, arg);
         return this.visit(p, arg);
+            //scmp.send((p,arg)-> { return this.ask(NS, args);
+
         //return this.visit(p, arg)
 }
 //////    {
@@ -813,6 +900,8 @@ public R visit(ABS.Absyn.ParamConstrIdent p, A arg)
         pcid.hashCode();
         pcid.accept(this, arg);
         return this.visit(p, arg);
+            //pcid.send((p,arg)-> { return this.ask(NS, args);
+
 }
 }
 //////    {
@@ -839,6 +928,8 @@ public R visit(ABS.Absyn.EmptyConstrType p, A arg)
         eict.hashCode();
         eict.accept(this, arg);
         return this.visit(p, arg);
+            //eict.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For EmptyConstrType Goes Here */
@@ -855,6 +946,8 @@ public R visit(ABS.Absyn.RecordConstrType p, A arg)
         rct.hashCode();
         rct.accept(this, arg);
         return this.visit(p, arg);
+            //rct.send((p,arg)-> { return this.ask(NS, args);
+
 }
 
 }
@@ -886,6 +979,8 @@ public R visit(ABS.Absyn.BuiltinFunBody p, A arg)
         bufb.hashCode();
         bufb.accept(this, arg);
         return this.visit(p, arg);
+            //bufb.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For BuiltinFunBody Goes Here */
@@ -902,6 +997,8 @@ public R visit(ABS.Absyn.NormalFunBody p, A arg)
         nofb.hashCode();
         nofb.accept(this, arg);
         return this.visit(p, arg);
+            //nofb.send((p,arg)-> { return this.ask(NS, args);
+
 }
 }
 //////    {
@@ -925,6 +1022,8 @@ public R visit(ABS.Absyn.MethSig p, A arg)
         mesi.hashCode();
         mesi.accept(this, arg);
         return this.visit(p, arg);
+            //mesi.send((p,arg)-> { return this.ask(NS, args);
+
 }
 }
 //////    {
@@ -952,6 +1051,8 @@ public R visit(ABS.Absyn.FieldClassBody p, A arg)
         fcbo.hashCode();
         fcbo.accept(this, arg);
         return this.visit(p, arg);
+            //fcbo.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For FieldClassBody Goes Here */
@@ -971,6 +1072,8 @@ public R visit(ABS.Absyn.FieldAssignClassBody p, A arg)
         facb.hashCode();
         facb.accept(this, arg);
         return this.visit(p, arg);
+            //facb.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For FieldAssignClassBody Goes Here */
@@ -990,6 +1093,8 @@ public R visit(ABS.Absyn.MethClassBody p, A arg)
         mcb.hashCode();
         mcb.accept(this, arg);
         return this.visit(p, arg);
+            //mcb.send((p,arg)-> { return this.ask(NS, args);
+
 }
 
 }
@@ -1020,6 +1125,8 @@ public R  visit(ABS.Absyn.Bloc p, A arg)
         blvc.hashCode();
         blvc.accept(this, arg);
         return this.visit(p, arg);
+            //blvc.send((p,arg)-> { return this.ask(NS, args);
+
 }
 }
 //////    {
@@ -1046,6 +1153,8 @@ public R visit(ABS.Absyn.JustBlock p, A arg)
         jblc.hashCode();
         jblc.accept(this, arg);
         return this.visit(p, arg);
+            //jblc.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For JustBlock Goes Here */
@@ -1062,6 +1171,8 @@ public R visit(ABS.Absyn.NoBlock p, A arg)
         nblc.hashCode();
         nblc.accept(this, arg);
         return this.visit(p, arg);
+            //nblc.send((p,arg)-> { return this.ask(NS, args);
+
 }
 }
 //////    {
@@ -1085,6 +1196,8 @@ public class ParamVisitor<R,A> implements Param.Visitor<R,A>
         lvc.hashCode();
         lvc.accept(this, arg);
         return this.visit(p, arg);
+            //lvc.send((p,arg)-> { return this.ask(NS, args);
+
  }
 }
 //////    {
@@ -1109,6 +1222,8 @@ public R visit(ABS.Absyn.SExp p, A arg)
         ac.hashCode();
         ac.accept(this, arg);
         return this.visit(p, arg);
+            //ac.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For SExp Goes Here */
@@ -1125,6 +1240,8 @@ public R visit(ABS.Absyn.SBlock p, A arg)
         sbvc.hashCode();
         sbvc.accept(this, arg);
         return this.visit(p, arg);
+            //sbvc.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For SBlock Goes Here */
@@ -1143,6 +1260,8 @@ public R visit(ABS.Absyn.SWhile p, A arg)
         wvc.hashCode();
         wvc.accept(this, arg);
         return this.visit(p, arg);
+            //wvc.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For SWhile Goes Here */
@@ -1161,6 +1280,8 @@ public R visit(ABS.Absyn.SReturn p, A arg)
         srvc.hashCode();
         srvc.accept(this, arg);
         return this.visit(p, arg);
+            //srvc.send((p,arg)-> { return this.ask(NS, args);
+
     
 }
 //////    {
@@ -1178,6 +1299,8 @@ public R visit(ABS.Absyn.SAss p, A arg)
         ass.hashCode();
         ass.accept(this, arg);
         return this.visit(p, arg);
+            //ass.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For SAss Goes Here */
@@ -1195,6 +1318,8 @@ public R visit(ABS.Absyn.SFieldAss p, A arg)
         sfvc.hashCode();
         sfvc.accept(this, arg);
         return this.visit(p, arg);
+            //sfvc.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For SFieldAss Goes Here */
@@ -1212,6 +1337,8 @@ public R visit(ABS.Absyn.SDec p, A arg)
         dec.hashCode();
         dec.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For SDec Goes Here */
@@ -1229,6 +1356,8 @@ public R visit(ABS.Absyn.SDecAss p, A arg)
         sda.hashCode();
         sda.accept(this, arg);
         return this.visit(p, arg);
+            //sda.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For SDecAss Goes Here */
@@ -1247,6 +1376,8 @@ public R visit(ABS.Absyn.SIf p, A arg)
         staif.hashCode();
         staif.accept(this, arg);
         return this.visit(p, arg);
+            //staif.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For SIf Goes Here */
@@ -1264,6 +1395,8 @@ public R visit(ABS.Absyn.SIf p, A arg)
         sife.hashCode();
         sife.accept(this, arg);
         return this.visit(p, arg);
+            //sife.send((p,arg)-> { return this.ask(NS, args);
+
  }
 //////    {
 //////      /* Code For SIfElse Goes Here */
@@ -1282,6 +1415,8 @@ public R visit(ABS.Absyn.SSuspend p, A arg)
         susp.hashCode();
         susp.accept(this, arg);
         return this.visit(p, arg);
+            //susp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For SSuspend Goes Here */
@@ -1297,6 +1432,8 @@ public R visit(ABS.Absyn.SSkip p, A arg)
         ssi.hashCode();
         ssi.accept(this, arg);
         return this.visit(p, arg);
+            //ssi.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For SSkip Goes Here */
@@ -1312,6 +1449,8 @@ public R visit(ABS.Absyn.SAssert p, A arg)
         sas.hashCode();
         sas.accept(this, arg);
         return this.visit(p, arg);
+            //sas.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For SAssert Goes Here */
@@ -1328,6 +1467,8 @@ public R visit(ABS.Absyn.SAwait p, A arg)
         awa.hashCode();
         awa.accept(this, arg);
         return this.visit(p, arg);
+            //awa.send((p,arg)-> { return this.ask(NS, args);
+
 }
 
         @Override
@@ -1366,6 +1507,8 @@ public R visit(ABS.Absyn.VarGuard p, A arg)
         vrg.hashCode();
         vrg.accept(this, arg);
         return this.visit(p, arg);
+            //vrg.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For VarGuard Goes Here */
@@ -1382,6 +1525,8 @@ public R visit(ABS.Absyn.FieldGuard p, A arg)
         fig.hashCode();
         fig.accept(this, arg);
         return this.visit(p, arg);
+            //fig.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For FieldGuard Goes Here */
@@ -1398,6 +1543,8 @@ public R visit(ABS.Absyn.ExpGuard p, A arg)
         exg.hashCode();
         exg.accept(this, arg);
         return this.visit(p, arg);
+            //exg.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For ExpGuard Goes Here */
@@ -1414,6 +1561,8 @@ public R visit(ABS.Absyn.AndGuard p, A arg)
         alvc.hashCode();
         alvc.accept(this, arg);
         return this.visit(p, arg);
+            //alvc.send((p,arg)-> { return this.ask(NS, args);
+
 }
 
 }
@@ -1439,6 +1588,8 @@ public class ExpVisitor<R,A> implements Exp.Visitor<R,A>
         exp.hashCode();
         exp.accept(this, arg); 
         return this.visit(p, arg);
+            //exp.send((p,arg)-> { return this.ask(NS, args);
+
  }
 //////    {
 //////      /* Code For ExpP Goes Here */
@@ -1455,6 +1606,8 @@ public class ExpVisitor<R,A> implements Exp.Visitor<R,A>
         expe.hashCode();
         expe.accept(this, arg);
         return this.visit(p, arg);
+            //expe.send((p,arg)-> { return this.ask(NS, args);
+
 }
  }
 //////    {
@@ -1478,6 +1631,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         eor.hashCode();
         eor.accept(this, arg);
         return this.visit(p, arg);
+            //eor.send((p,arg)-> { return this.ask(NS, args);
+
  }
 //////    {
 //////      /* Code For EOr Goes Here */
@@ -1495,6 +1650,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         let.hashCode();
         let.accept(this, arg);
         return this.visit(p, arg);
+            //let.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For Let Goes Here */
@@ -1513,6 +1670,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         synif.hashCode();
         synif.accept(this, arg);
         return this.visit(p, arg);
+            //synif.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For If Goes Here */
@@ -1531,6 +1690,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         ase.hashCode();
         ase.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For Case Goes Here */
@@ -1549,6 +1710,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         eand.hashCode();
         eand.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For EAnd Goes Here */
@@ -1566,6 +1729,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         eeq.hashCode();
         eeq.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For EEq Goes Here */
@@ -1583,6 +1748,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         eneq.hashCode();
         eneq.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For ENeq Goes Here */
@@ -1600,6 +1767,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         elt.hashCode();
         elt.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For ELt Goes Here */
@@ -1617,6 +1786,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         ele.hashCode();
         ele.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For ELe Goes Here */
@@ -1634,6 +1805,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         egt.hashCode();
         egt.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For EGt Goes Here */
@@ -1651,6 +1824,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         ege.hashCode();
         ege.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For EGe Goes Here */
@@ -1668,6 +1843,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         eadd.hashCode();
         eadd.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For EAdd Goes Here */
@@ -1685,6 +1862,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         sub.hashCode();
         sub.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For ESub Goes Here */
@@ -1702,6 +1881,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         emul.hashCode();
         emul.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For EMul Goes Here */
@@ -1719,6 +1900,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         ediv.hashCode();
         ediv.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
  }
 //////    {
 //////      /* Code For EDiv Goes Here */
@@ -1736,6 +1919,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         emod.hashCode();
         emod.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For EMod Goes Here */
@@ -1753,6 +1938,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         elog.hashCode();
         elog.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For ELogNeg Goes Here */
@@ -1769,6 +1956,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         eint.hashCode();
         eint.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For EIntNeg Goes Here */
@@ -1785,6 +1974,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         efun.hashCode();
         efun.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For EFunCall Goes Here */
@@ -1803,6 +1994,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         equal.hashCode();
         equal.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For EQualFunCall Goes Here */
@@ -1822,6 +2015,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         enary.hashCode();
         enary.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For ENaryFunCall Goes Here */
@@ -1840,6 +2035,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         enqf.hashCode();
         enqf.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
         
 }
 //////    {
@@ -1860,6 +2057,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         evar.hashCode();
         evar.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For EVar Goes Here */
@@ -1876,6 +2075,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         ethi.hashCode();
         ethi.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For EThis Goes Here */
@@ -1892,6 +2093,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         equv.hashCode();
         equv.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For EQualVar Goes Here */
@@ -1909,6 +2112,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         esing.hashCode();
         esing.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For ESinglConstr Goes Here */
@@ -1925,6 +2130,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         epac.hashCode();
         epac.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 //////    {
 //////      /* Code For EParamConstr Goes Here */
@@ -1943,6 +2150,8 @@ public class PureExpVisitor<R,A> implements PureExp.Visitor<R,A>
         elit.hashCode();
         elit.accept(this, arg);
         return this.visit(p, arg);
+            //coresp.send((p,arg)-> { return this.ask(NS, args);
+
 }
 }
 //////    {
@@ -1966,9 +2175,12 @@ public class CaseBranchVisitor<R,A> implements CaseBranch.Visitor<R,A>
         casbr.hashCode();
         casbr.accept(this, arg);
         return this.visit(p, arg);
- }
+            //casbr.send((ABS.Absyn.CaseBranc ,A)-> { return this.ask(NS, args);});
+
+ 
 }
 
+}
 }
 
 

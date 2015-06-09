@@ -4,18 +4,21 @@
  * and open the template in the editor.
  */
 package absjavacomp;
+import ABS.Absyn.*;
 import abs.api.Actor;
 import abs.api.Configuration;
 import abs.api.Context;
 import abs.api.DispatchInbox;
 import abs.api.LocalContext;
 import abs.api.Reference;
-import java.net.URI;
+//import abs.api.Reference;
+//import java.net.URI;
 //import java.util.List;
 //import java.util.concurrent.Callable;
 //import java_cup.runtime.*;
 //import ABS.*;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 //import java.util.AbstractCollection;
 //import absjavacomp.Traverse;
 //import ABS.gen.java.ABS.Absyn.*;
@@ -27,8 +30,10 @@ import java.util.concurrent.Executors;
  *
  * @author chetan
  */
-public class Absjavacomp extends Traverse {
+public class Absjavacomp extends Traverse implements Actor {
 
+    
+    private final Traverse traverse = new Traverse();
     /**
      * @param args the command line arguments
      */
@@ -37,33 +42,21 @@ public class Absjavacomp extends Traverse {
 	// copy paste this to use the ABS API into the code(configuration settings)
 	private static final Configuration config = Configuration
 			.newConfiguration()
-			.withInbox(new DispatchInbox(Executors.newWorkStealingPool()))
+       
+                
+                .withInbox(new DispatchInbox(Executors.newWorkStealingPool()))
 			.build();
 	private final Context context = new LocalContext(config);   
 
-//Creating an object for the first node in the ast
-        
-        Actor actor = new Actor() {
-
-            @Override
-            public URI name() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public int compareTo(Reference t) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-        };
-        
-            
-      
-        
+                 
         public static void main(String[] args) {
         // TODO code application logic here
  //Required to access the front end path
-
+      
+       
+   
     
-    }}
+    }
+}
     
-
+    
